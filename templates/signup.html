@@ -18,6 +18,11 @@
      <DIV class="col-md-5">
         <div class="card shadow-sm">
             <div class="card card-body">
+                {% if registered %}
+                    <h1>Thankyou for registration..!!</h1>
+                    <p>please proceed to <a href="login">login</a></p>
+
+                {% else %}
                 <h2 class="text-center mb-4">Signup</h2>
                     <form method="post" >
                     {% csrf_token %}    
@@ -45,6 +50,7 @@
                             <button type="submit" class="btn btn-primary px-4">Register</button>
                         </div>
                     </form>
+                    {% endif %}
     </div>
     </div>
         <div class="text-center mt-3">

@@ -6,6 +6,7 @@ from django.contrib.auth.decorators import login_required
 from task.models import Task
 from task.forms import TaskForm
 from django.db.models import Q
+from django.utils import timezone
 
 # Create your views here.
 def signup(request):
@@ -27,7 +28,7 @@ def user_login(request):
         if user is not None:
             if user.is_active:   
                 login(request, user)  
-                return redirect('login')  
+                return redirect('dashboard')  
             else:
                 return HttpResponse("User account is disabled.")        
         else:
@@ -112,3 +113,19 @@ def delete_task(request, id):
 
     
     return render(request, 'deleteTask.html', {'task': task})
+
+
+
+@login_required(login_url="login")
+def dashboard(request):
+    user_tasks = Task.objects.filter(user=request.user)
+    today = timezone.now().date()
+
+    status = {
+        'total': user_tasks.count(),
+        'pending': user_tasks.filter(status='PENDING').count(),
+        'completed': user_tasks.filter(status='DONE').count(),
+        'overdue': user_tasks.filter(due_date__lt=today).exclude(status='DONE').count(),
+    }
+
+    return render(request, 'dashboard.html', {'status': status})
