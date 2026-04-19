@@ -1,16 +1,57 @@
 {% extends 'base.html' %}
-
+{% load static %}
 {% block content %}
-        <div class="container">
-        <div class="jumbotron">
-            <div class="card card-body">
-                <h1>Sign in here</h1>
+<style>
+    body {
+        
+        background: url("{% static 'images/bg4.avif' %}") no-repeat center center fixed;
+        background-size: cover;
+        height: 100vh;
+    }
+    .glass-card {
+        border-radius: 20px;
+        background: rgba(255, 255, 255, 0.1) !important; 
+        backdrop-filter: blur(15px) saturate(180%);
+        -webkit-backdrop-filter: blur(15px) saturate(180%);
+        border: 1px solid rgba(255, 255, 255, 0.3); 
+        border-radius: 25px;
+        box-shadow: 0 0px 30px  rgba(0, 0, 0, 0.3);
+        
+       
+    }
+    .glass-card .form-control {
+        background: rgba(255, 255, 255, 0.5); 
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        border-radius: 10px;
+        padding: 5px;
+        
+        
+    }
+
+    .glass-card .form-control:focus {
+        background: rgba(255, 255, 255, 0.8); 
+        box-shadow: 0 0px 10px  rgba(0, 0, 0, 0.3);
+       
+    }
+    .glass-card h2 {
+        font-weight: 500;
+        color: #333; 
+        letter-spacing: -1px;
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    }
+
+</style>
+        <div class="container mt-5">
+        <div class="row justify-content-center">
+        <div class="col-md-5">
+            <div class="card glass-card p-5">
+                <h2 class="text-center">Login here</h2>
                 <form action="{% url 'login' %}" method="POST"  >
                     {% csrf_token %}
                     <div class="mb-3">
                         <label for="username" class="form-label">Username</label>
                         <input type="text" class="form-control" name="username" id="exampleInputUsername1">
-                        <div id="emailHelp" class="form-text">We'll never share your username with anyone else.</div>
+                        
                     </div>
                     <div class="mb-3">
                         <label for="exampleInputPassword1" class="form-label">Password</label>
@@ -20,15 +61,12 @@
                     <button type="submit" class="btn btn-primary">Login</button>
                     </form>
                     <div class="text-center mt-3">
-                    <small class="text-secondary">
+                    <small>
                         Don't have an account? <a href="{% url 'signup' %}" class="text-decoration-none fw-bold">Sign up</a>
                     </small>
                     </div>
 
             </div>
-             
-             
-
         </div>
-    </div>
+    </div> </div> 
 {% endblock %}

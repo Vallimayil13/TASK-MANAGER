@@ -17,3 +17,8 @@ class TaskForm(forms.ModelForm):
     class Meta:
         model = Task
         fields = ['title', 'description', 'due_date', 'status', 'priority']
+        widgets = {
+           
+            'description': forms.Textarea(attrs={'rows': 5}),
+            'due_date': forms.DateInput(attrs={'type': 'date'}),
+        }

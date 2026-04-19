@@ -2,8 +2,8 @@ from django.urls import path
 from task import views
 
 urlpatterns = [
-    path('signup', views.signup, name="signup"),
-    path('', views.user_login, name="login")  ,
+    path('', views.signup, name="signup"),
+    path('login', views.user_login, name="login")  ,
     path('logout',views.user_logout, name="logout"), 
     path('task_list', views.task_list, name='task_list'),
     path('create_task', views.create_task, name='create_task'),

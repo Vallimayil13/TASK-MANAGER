@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 {% load crispy_forms_tags %}
-
+{% load static %}
 {% block content %}
 <style>
      .helptext, .form-text, .text-muted {
@@ -9,21 +9,76 @@
         ul#hint_id_password1, ul.helptext {
         display: none !important;
     }
+    body {
+        
+        background: url("{% static 'images/bg4.avif' %}") no-repeat center center fixed;
+        background-size: cover;
+        height: 100vh;
+    }
+    .glass-card {
+        border-radius: 20px;
+        background: rgba(255, 255, 255, 0.1) !important; 
+        backdrop-filter: blur(15px) saturate(180%);
+        -webkit-backdrop-filter: blur(15px) saturate(180%);
+        border: 1px solid rgba(255, 255, 255, 0.3); 
+        border-radius: 25px;
+        box-shadow: 0 0px 30px  rgba(0, 0, 0, 0.3);
+        
+       
+    }
+    .glass-card .form-control {
+        background: rgba(255, 255, 255, 0.5); 
+        border: 1px solid rgba(255, 255, 255, 0.3);
+        border-radius: 10px;
+        padding: 5px;
+        
+        
+    }
+
+    .glass-card .form-control:focus {
+        background: rgba(255, 255, 255, 0.8); 
+        box-shadow: 0 0px 10px  rgba(0, 0, 0, 0.3);
+       
+    }
+    .glass-card h2 {
+        font-weight: 500;
+        color: #333; 
+        letter-spacing: -1px;
+        text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+    }
+
+   .btn-glass {
+        background: rgba(255, 255, 255, 0.2); 
+        backdrop-filter: blur(5px);
+        border: 1px solid rgba(28, 26, 26, 0.4);
+        transition: 0.3s;
+    }
+
+    .btn-glass:hover {
+        background: rgba(45, 44, 44, 0.4);
+        color: white;
+    }
+
+    
+   
+
 </style>
+
      
 
    
     <div class="container mt-5">
     <div class="row justify-content-center">
-     <DIV class="col-md-5">
-        <div class="card shadow-sm">
-            <div class="card card-body">
+    <div class="col-md-5">
+         <div class="card glass-card">
+            <div class="card-body p-5">
+                
                 {% if registered %}
                     <h1>Thankyou for registration..!!</h1>
-                    <p>please proceed to <a href="login">login</a></p>
+                    <p>please proceed to <a href="{% url 'login' %}">login</a></p>
 
                 {% else %}
-                <h2 class="text-center mb-4">Signup</h2>
+                <h2 class="text-center mb-4">Sign up</h2>
                     <form method="post" >
                     {% csrf_token %}    
                 
@@ -34,9 +89,6 @@
                             {{ form.email | as_crispy_field }} 
                         </div>
               
-
-
-               
                         <div class="mb-3">          
                             {{ form.password1 | as_crispy_field }}     
                         </div>
@@ -47,18 +99,18 @@
                         </div>
                   
                         <div class="text-center">
-                            <button type="submit" class="btn btn-primary px-4">Register</button>
+                            <button type="submit" class="btn btn-glass">Register</button>
                         </div>
                     </form>
                     {% endif %}
-    </div>
-    </div>
-        <div class="text-center mt-3">
-            <small class="text-secondary">Already have an account? <a href="{% url 'login' %}">Login</a></small>
+            </div>
         </div>
-    </DIV>
+                    <div class="text-center mt-3">
+                        <small>Already have an account? <a href="{% url 'login' %}">Login</a></small>
+                    </div>
     </div>
     </div>
-
+    </div>
 
 {% endblock %}
+

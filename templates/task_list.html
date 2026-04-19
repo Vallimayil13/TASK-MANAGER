@@ -1,72 +1,88 @@
 
 {% extends 'base.html' %}
+{% load static %}
 
 {% block content %}
-<div class="container mt-4">
-    <div class="d-flex justify-content-between align-items-center mb-4">
-        <h2>Your Tasks</h2>
-        <a href="{% url 'create_task' %}" class="btn btn-primary">+ Add New Task</a>
-    </div>
+<style>
+    body {
+        background: url("{% static 'images/bg10.webp' %}") no-repeat center center fixed;
+        background-size: cover;
+        min-height: 100vh;
+    }
 
     
-    <form method="GET" action="{% url 'task_list' %}" class="row g-2 mb-4 align-items-end p-3 bg-light rounded shadow-sm">
-        <div class="col-md-4">
-            <label class="form-label small fw-bold">Search Title</label>
-            <input type="text" name="search" class="form-control" placeholder="Search..." value="{{ request.GET.search }}">
-        </div>
+    .glass-panel {
+        background: rgba(255, 255, 255, 0.75) !important;
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.3) !important;
+        border-radius: 15px;
+    }
 
-        <div class="col-md-3">
-            <label class="form-label small fw-bold">Status</label>
-            <select name="status" class="form-select">
-                <option value="">All Statuses</option>
-                <option value="PENDING" {% if request.GET.status == 'PENDING' %}selected{% endif %}>Pending</option>
-                <option value="IN_PROGRESS" {% if request.GET.status == 'IN_PROGRESS' %}selected{% endif %}>In Progress</option>
-                <option value="DONE" {% if request.GET.status == 'DONE' %}selected{% endif %}>Done</option>
-            </select>
-        </div>
+    .table { background: transparent !important; }
+    
+    
+    .badge { padding: 8px 12px; border-radius: 6px; }
 
-        <div class="col-md-3">
-            <label class="form-label small fw-bold">Priority</label>
-            <select name="priority" class="form-select">
-                <option value="">All Priorities</option>
-                <option value="LOW" {% if request.GET.priority == 'LOW' %}selected{% endif %}>Low</option>
-                <option value="MEDIUM" {% if request.GET.priority == 'MEDIUM' %}selected{% endif %}>Medium</option>
-                <option value="HIGH" {% if request.GET.priority == 'HIGH' %}selected{% endif %}>High</option>
-            </select>
-        </div>
+    
+    
+</style>
 
-        <div class="col-md-2 d-flex">
-            <button type="submit" class="btn btn-dark w-100 me-1">Filter</button>
-            <a href="{% url 'task_list' %}" class="btn btn-outline-secondary">Reset</a>
-        </div>
-    </form>
-    <!-- --- END OF NEW FORM --- -->
-
-    <div class="container mt-4">
+<div class="container mt-4 pb-5">
+  
     <div class="d-flex justify-content-between align-items-center mb-4">
-        <h2>Your Tasks</h2>
-        
+        <h2 class="fw-bold text-dark">Your Tasks</h2>
+       
     </div>
 
-    <div class="card shadow-sm">
+
+    <form method="GET" action="{% url 'task_list' %}" class="row g-2 mb-4 align-items-end p-3 glass-panel shadow-sm mx-0">
+        <div class="col-md-4">
+            <label class="form-label small fw-bold">Search Title</label>
+            <input type="text" name="search" class="form-control rounded-3" placeholder="Search..." value="{{ request.GET.search }}">
+        </div>
+        <div class="col-md-3">
+            <label class="form-label small fw-bold">Status</label>
+            <select name="status" class="form-select rounded-3">
+                <option value="">All Statuses</option>
+                <option value="PENDING" {% if request.GET.status == 'PENDING' %} selected {% endif %}>Pending</option>
+                <option value="IN_PROGRESS" {% if request.GET.status == 'IN_PROGRESS' %} selected {% endif %}>In Progress</option>
+                <option value="DONE" {% if request.GET.status == 'DONE' %} selected {% endif %}>Done</option>
+            </select>
+        </div>
+        <div class="col-md-3">
+            <label class="form-label small fw-bold">Priority</label>
+            <select name="priority" class="form-select rounded-3">
+                <option value="">All Priorities</option>
+                <option value="LOW" {% if request.GET.priority == 'LOW' %} selected {% endif %}>Low</option>
+                <option value="MEDIUM" {% if request.GET.priority == 'MEDIUM' %} selected {% endif %}>Medium</option>
+                <option value="HIGH" {% if request.GET.priority == 'HIGH' %} selected {% endif %}>High</option>
+            </select>
+        </div>
+        <div class="col-md-2 d-flex">
+            <button type="submit" class="btn btn-dark w-100 me-1 rounded-3">Filter</button>
+            <a href="{% url 'task_list' %}" class="btn btn-outline-secondary w-100 rounded-3">Reset</a>
+        </div>
+    </form>
+
+    <!-- Table Section: Styled as Glass -->
+    <div class="card glass-panel shadow-sm border-0">
         <div class="table-responsive">
             <table class="table table-hover align-middle mb-0">
                 <thead class="table-light">
                     <tr>
-                        <th>Title</th>
+                        <th class="ps-4">Title</th>
                         <th>Due Date</th>
                         <th>Status</th>
                         <th>Priority</th>
-                        <th class="text-center">Actions</th>
+                        <th class="text-center pe-4">Actions</th>
                     </tr>
                 </thead>
                 <tbody>
                     {% for task in tasks %}
                     <tr>
-                        <td class="fw-bold">{{ task.title }}</td>
+                        <td class="fw-bold ps-4">{{ task.title }}</td>
                         <td>{{ task.due_date|date:"M d, Y" }}</td>
                         <td>
-                            <!-- Adding color badges based on status -->
                             <span class="badge {% if task.status == 'DONE' %}bg-success{% elif task.status == 'IN_PROGRESS' %}bg-info text-dark{% else %}bg-warning text-dark{% endif %}">
                                 {{ task.get_status_display }}
                             </span>
@@ -76,14 +92,17 @@
                                 {{ task.get_priority_display }}
                             </span>
                         </td>
-                        <td class="text-center">
-                            <a href="{% url 'update_task' task.id %}" class="btn btn-outline-primary btn-sm me-1">Edit</a>
-                            <a href="{% url 'delete_task' task.id %}" class="btn btn-outline-danger btn-sm">Delete</a>
+                        <td class="text-center pe-4">
+                            <a href="{% url 'update_task' task.id %}" class="btn btn-outline-primary btn-sm me-1 rounded-2 px-3">
+                                Edit
+                            </a>
+                            <a href="{% url 'delete_task' task.id %}" class="btn btn-outline-danger btn-sm rounded-2 px-3">
+                                Delete
+                            </a>
                         </td>
-                    </tr>
                     {% empty %}
                     <tr>
-                        <td colspan="5" class="text-center py-4 text-muted">No tasks found.</td>
+                        <td colspan="5" class="text-center py-5 text-muted">No tasks found.</td>
                     </tr>
                     {% endfor %}
                 </tbody>

@@ -1,54 +1,91 @@
 {% extends 'base.html' %}
+{% load static %}
 
 {% block content %}
-<div class="container mt-5">
-    <h2 class="mb-4">Task Statistics</h2>
+<style>
+    body {
+        background: url("{% static 'images/bg13.jpg' %}") no-repeat center center fixed ;
+        background-size: cover;
+        min-height: 100vh;
+    }
+
+    .glass-stat-card {
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.2) !important;
+        border-radius: 20px;
+        transition: transform 0.3s ease;
+    }
+
+    .glass-stat-card:hover {
+        transform: scale(1.1);
+    }
+
+    .glass-action-panel {
+        background: rgba(255, 255, 255, 0.85) !important;
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(255, 255, 255, 0.3) !important;
+        border-radius: 20px;
+    }
+
+   .glass-stat-card {
+    border: 4px solid rgba(255, 255, 255, 0.9) !important; 
+    border-radius: 20px;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+}
+</style>
+
+<div class="container mt-5 pb-5">
+    <h1 class="mb-4 fw-bold text-dark ">Task Statistics</h1>
     
     <div class="row g-4">
         <!-- Total Tasks -->
         <div class="col-md-3">
-            <div class="card shadow-sm border-0 bg-dark text-white">
-                <div class="card-body text-center">
-                    <h6 class="text-uppercase small">Total</h6>
-                    <h2 class="display-5 fw-bold">{{ status.total }}</h2>
+            <div class="card glass-stat-card shadow-sm bg-dark text-white border-0">
+                <div class="card-body text-center py-4">
+                    <h6 class="text-uppercase small fw-bold ">Total</h6>
+                    <h2 class="display-7 fw-bold ">{{ status.total }}</h2>
                 </div>
             </div>
         </div>
 
         <!-- Overdue Tasks -->
         <div class="col-md-3">
-            <div class="card shadow-sm  bg-danger text-white">
-                <div class="card-body text-center">
-                    <h6 class="text-uppercase small">Overdue</h6>
-                    <h2 class="display-5 fw-bold">{{ status.overdue }}</h2>
+            <div class="card glass-stat-card shadow-sm bg-danger text-white border-0">
+                <div class="card-body text-center py-4">
+                    <h6 class="text-uppercase small fw-bold ">Overdue</h6>
+                    <h2 class="display-7 fw-bold">{{ status.overdue }}</h2>
                 </div>
             </div>
         </div>
 
         <!-- Pending Tasks -->
         <div class="col-md-3">
-            <div class="card shadow-sm  bg-warning text-dark">
-                <div class="card-body text-center">
-                    <h6 class="text-uppercase small">Pending</h6>
-                    <h2 class="display-5 fw-bold">{{ status.pending }}</h2>
+            <div class="card glass-stat-card shadow-sm bg-warning text-dark border-0">
+                <div class="card-body text-center py-4">
+                    <h6 class="text-uppercase small fw-bold ">Pending</h6>
+                    <h2 class="display-7 fw-bold ">{{ status.pending }}</h2>
                 </div>
             </div>
         </div>
 
         <!-- Completed Tasks -->
         <div class="col-md-3">
-            <div class="card shadow-sm  bg-success text-white">
-                <div class="card-body text-center">
-                    <h6 class="text-uppercase small">Completed</h6>
-                    <h2 class="display-5 fw-bold">{{ status.completed }}</h2>
+            <div class="card glass-stat-card shadow-sm bg-success text-white border-0">
+                <div class="card-body text-center py-4">
+                    <h6 class="text-uppercase small fw-bold ">Completed</h6>
+                    <h2 class="display-7 fw-bold ">{{ status.completed }}</h2>
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="mt-5 p-4 bg-light rounded text-center">
-        <h4>Ready to manage your day?</h4>
-        <a href="{% url 'task_list' %}" class="btn btn-outline-dark px-4 mt-2">View Task List</a>
+   
+    <div class="mt-5 p-5 glass-action-panel text-center shadow-sm">
+        <h3 class="fw-bold mb-3">Ready to manage your day?</h3>
+        <p class="text-secondary mb-4">Check your full list of tasks and stay on top of your schedule.</p>
+        <a href="{% url 'task_list' %}" class="btn btn-dark btn-lg rounded-pill px-5 shadow-sm">
+            View Task List
+        </a>
     </div>
 </div>
 {% endblock %}
