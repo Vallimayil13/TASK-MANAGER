@@ -40,11 +40,41 @@
         text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
     }
 
+     .btn-glass {
+        background: rgba(255, 255, 255, 0.2); 
+        backdrop-filter: blur(5px);
+        border: 1px solid rgba(28, 26, 26, 0.4);
+        transition: 0.3s;
+    }
+
+    .btn-glass:hover {
+        background: rgba(45, 44, 44, 0.4);
+        color: white;
+    }
+    
+    .alert {
+     background: rgba(255, 255, 255, 0.1) !important; 
+    color: black;           
+    padding: 10px;
+    margin-bottom: 15px;
+    border-radius: 5px;
+    border: 1px solid white;
+    font-size: 14px;
+    text-align: center;
+}
+
 </style>
         <div class="container mt-5">
         <div class="row justify-content-center">
         <div class="col-md-5">
             <div class="card glass-card p-5">
+            {% if messages %}
+                {% for message in messages %}
+                    <div class="alert">
+                        {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
                 <h2 class="text-center">Login here</h2>
                 <form action="{% url 'login' %}" method="POST"  >
                     {% csrf_token %}
@@ -57,9 +87,12 @@
                         <label for="exampleInputPassword1" class="form-label">Password</label>
                         <input type="password" name="password" class="form-control" id="exampleInputPassword1">
                     </div>
-                   
-                    <button type="submit" class="btn btn-primary">Login</button>
+
+                    <div class="text-center mt-3">
+                    <button type="submit" class="btn btn-glass">Login</button>
+                    </div>
                     </form>
+
                     <div class="text-center mt-3">
                     <small>
                         Don't have an account? <a href="{% url 'signup' %}" class="text-decoration-none fw-bold">Sign up</a>

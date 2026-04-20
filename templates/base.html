@@ -1,5 +1,5 @@
- <!DOCTYPE html>
- {% load static %}
+<!DOCTYPE html>
+{% load static %}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -8,37 +8,37 @@
     <link rel="icon" type="image/jpg" href="{% static 'images/icon.jpg' %}">
     
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
 </head>
 <body>
     <style>
         .navbar-custom {
-    background: rgba(255, 255, 255, 0.8) !important;
-    backdrop-filter: blur(10px);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.3);
-    padding: 15px 0; 
-}
+            background: rgba(255, 255, 255, 0.8) !important;
+            backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.3);
+            padding: 15px 0; 
+        }
 
 
-.navbar-brand img {
-    border-radius: 50%; 
-    margin-right: 10px;
-}
+        .navbar-brand img {
+            border-radius: 50%; 
+            margin-right: 10px;
+        }
 
 
-.nav-link-custom {
-    color: #444 !important;
-    font-weight: 500;
-    margin-left: 20px;
-    transition: 0.3s;
-}
+        .nav-link-custom {
+            color: #444 !important;
+            font-weight: 500;
+            margin-left: 20px;
+            transition: 0.3s;
+        }
 
-.nav-link-custom:hover {
-    color: #6366f1 !important; 
-}
+        .nav-link-custom:hover {
+            color: #6366f1 !important; 
+        }
     </style>
 
-    <nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm mb-4">
+<nav class="navbar navbar-expand-lg navbar-light bg-light shadow-sm mb-4">
     <div class="container">
         
         <a class="navbar-brand fw-bold" href="{% url 'dashboard' %}">
@@ -48,14 +48,12 @@
 
        
         <div class="navbar-nav ms-auto d-flex align-items-center">
-            {% if user.is_authenticated %}
-               
+            {% if user.is_authenticated %}       
                 <a class="nav-link nav-link-custom" href="{% url 'create_task' %}">Create New Task</a>
                 <a class="nav-link nav-link-custom" href="{% url 'task_list' %}">List of Tasks</a>
                 <a class="nav-link nav-link-custom" href="{% url 'dashboard' %}">Dashboard</a>
                 <a class="nav-link nav-link-custom text-danger " href="{% url 'logout' %}">Log Out</a>
-            {% else %}
-                
+            {% else %}            
                 <a class="nav-link nav-link-custom" href="{% url 'signup' %}">Register</a>
                 <a class="nav-link nav-link-custom" href="{% url 'login' %}">Login</a>
             {% endif %}

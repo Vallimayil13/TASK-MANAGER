@@ -3,10 +3,10 @@
 {% load static %}
 {% block content %}
 <style>
-     .helptext, .form-text, .text-muted {
+    .helptext, .form-text, .text-muted {
         display: none !important;
     }
-        ul#hint_id_password1, ul.helptext {
+    ul#hint_id_password1, ul.helptext {
         display: none !important;
     }
     body {
@@ -16,30 +16,26 @@
         height: 100vh;
     }
     .glass-card {
-        border-radius: 20px;
+        border-radius: 25px;
         background: rgba(255, 255, 255, 0.1) !important; 
         backdrop-filter: blur(15px) saturate(180%);
         -webkit-backdrop-filter: blur(15px) saturate(180%);
         border: 1px solid rgba(255, 255, 255, 0.3); 
-        border-radius: 25px;
-        box-shadow: 0 0px 30px  rgba(0, 0, 0, 0.3);
-        
-       
+        box-shadow: 0 0px 30px  rgba(0, 0, 0, 0.3);   
     }
+
     .glass-card .form-control {
         background: rgba(255, 255, 255, 0.5); 
         border: 1px solid rgba(255, 255, 255, 0.3);
         border-radius: 10px;
-        padding: 5px;
-        
-        
+        padding: 5px;    
     }
 
     .glass-card .form-control:focus {
         background: rgba(255, 255, 255, 0.8); 
-        box-shadow: 0 0px 10px  rgba(0, 0, 0, 0.3);
-       
+        box-shadow: 0 0px 10px  rgba(0, 0, 0, 0.3);   
     }
+
     .glass-card h2 {
         font-weight: 500;
         color: #333; 
@@ -59,25 +55,24 @@
         color: white;
     }
 
-    
-   
+    .captcha-container {
+        margin: 10px 0;
+        display: flex;
+        justify-content: center;
+        transform: scale(0.85);   
+    }
 
 </style>
 
      
 
    
-    <div class="container mt-5">
+    <div class="container mt-3">
     <div class="row justify-content-center">
     <div class="col-md-5">
          <div class="card glass-card">
-            <div class="card-body p-5">
-                
-                {% if registered %}
-                    <h1>Thankyou for registration..!!</h1>
-                    <p>please proceed to <a href="{% url 'login' %}">login</a></p>
-
-                {% else %}
+            <div class="card-body p-4">
+            
                 <h2 class="text-center mb-4">Sign up</h2>
                     <form method="post" >
                     {% csrf_token %}    
@@ -97,12 +92,16 @@
                         <div class="mb-3">          
                             {{ form.password2 | as_crispy_field }}     
                         </div>
-                  
+                        
+                        <div class="captcha-container">
+                            {{ form.captcha }}
+                        </div>
                         <div class="text-center">
                             <button type="submit" class="btn btn-glass">Register</button>
                         </div>
+                        
                     </form>
-                    {% endif %}
+                   
             </div>
         </div>
                     <div class="text-center mt-3">

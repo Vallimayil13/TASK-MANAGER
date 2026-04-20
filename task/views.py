@@ -7,19 +7,28 @@ from task.models import Task
 from task.forms import TaskForm
 from django.db.models import Q
 from django.utils import timezone
+from django.contrib import messages
+from django.views.decorators.cache import never_cache
 
 # Create your views here.
-def signup(request):
+@never_cache
+def signup(request):  
+    if request.user.is_authenticated:
+        return redirect('dashboard') 
     if request.method == 'POST':
         form = SignupForm(request.POST)
         if form.is_valid():
             form.save()
+            messages.success(request, "Thank you for registration! Please proceed to login.")
             return redirect('login')
     else:
         form = SignupForm()    
     return render(request, 'signup.html', {'form': form})
 
+@never_cache
 def user_login(request):  
+    if request.user.is_authenticated:
+        return redirect('dashboard')
     if request.method== 'POST':   
         username=request.POST['username']  
         password=request.POST['password']
@@ -32,17 +41,19 @@ def user_login(request):
             else:
                 return HttpResponse("User account is disabled.")        
         else:
-            return HttpResponse("Invalid username or password.")
-       
+            return HttpResponse("Invalid username or password.")      
     return render(request, "login.html",{})
 
-@login_required(login_url="login")
+
+@login_required
+@never_cache
 def user_logout(request):
     logout(request)
     return redirect("login")
 
 
 @login_required
+@never_cache
 def create_task(request):
     if request.method == 'POST':
         form = TaskForm(request.POST)
@@ -61,6 +72,7 @@ def create_task(request):
     })
 
 @login_required
+@never_cache
 def update_task(request, id):
     task = get_object_or_404(Task, id=id, user=request.user)
 
@@ -81,6 +93,7 @@ def update_task(request, id):
 
 
 @login_required(login_url="login")
+@never_cache
 def task_list(request):
     
     tasks = Task.objects.filter(user=request.user)
@@ -104,6 +117,7 @@ def task_list(request):
 
 
 @login_required(login_url="login")
+@never_cache
 def delete_task(request, id):
     task = get_object_or_404(Task, id=id, user=request.user)
     
@@ -117,15 +131,26 @@ def delete_task(request, id):
 
 
 @login_required(login_url="login")
+@never_cache
 def dashboard(request):
     user_tasks = Task.objects.filter(user=request.user)
     today = timezone.now().date()
 
     status = {
         'total': user_tasks.count(),
-        'pending': user_tasks.filter(status='PENDING').count(),
+        'pending': user_tasks.filter(status='PENDING', due_date__gte=today).count(),
         'completed': user_tasks.filter(status='DONE').count(),
         'overdue': user_tasks.filter(due_date__lt=today).exclude(status='DONE').count(),
     }
 
     return render(request, 'dashboard.html', {'status': status})
+
+
+def mark_all_overdue_done(request):
+    today = timezone.now().date()
+    Task.objects.filter(
+        user=request.user, 
+        due_date__lt=today
+    ).exclude(status='DONE').update(status='DONE')
+    
+    return redirect('dashboard')

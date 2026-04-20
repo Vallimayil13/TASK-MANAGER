@@ -41,10 +41,14 @@ INSTALLED_APPS = [
     'crispy_forms',
     'crispy_bootstrap5' ,
     'task',
+    'django_recaptcha',
 ]
 
 CRISPY_TEMPLATE_PACK = "bootstrap5"
 CRISPY_ALLOWED_TEMPLATE_PACKS="bootstrap5"
+
+RECAPTCHA_PUBLIC_KEY = '6LcvppssAAAAAGiRTylPBPXqRJCkx62vlBElBIQ6'
+RECAPTCHA_PRIVATE_KEY = '6LcvppssAAAAAAESh7iD2Gp8AFFlmFA9BOZiD3pz'
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
