@@ -53,7 +53,13 @@ python manage.py migrate
 6. Create superuser:
 python manage.py createsuperuser
 
-7. Run the server:
+7. Environment Variables
+Create a `.env` file and add:
+
+RECAPTCHA_PUBLIC_KEY=your_key
+RECAPTCHA_PRIVATE_KEY=your_key
+
+8. Run the server:
 python manage.py runserver
 
 

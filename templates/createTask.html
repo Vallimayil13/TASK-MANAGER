@@ -2,55 +2,11 @@
 {% load crispy_forms_tags %}
 {% load static %}
 
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'css/createTask.css' %}">
+{% endblock %}
+
 {% block content %}
-<style>
-    body {
-    
-        background: url("{% static 'images/bg7.png' %}") no-repeat center center fixed;
-        background-size: cover;
-        min-height: 100vh;
-        margin: 0;
-    }
-
-    .glass-task-card {
-       
-        background: white;
-        backdrop-filter: blur(20px) saturate(160%);
-        -webkit-backdrop-filter: blur(20px) saturate(160%);
-        border: 1px solid rgba(255, 255, 255, 0.15) !important;
-        border-radius: 30px;
-        box-shadow: 0 15px 35px rgba(0, 0, 0, 0.4);
-    }
-
-   
-    .glass-task-card h2, .glass-task-card label {
-        font-weight: 600;
-        color: #1a0b3c !important;
-        text-shadow: 0 2px 10px rgba(0,0,0,0.3);
-
-    }
-
-    .glass-task-card .form-control, .glass-task-card .form-select {
-        
-        background: rgba(255, 255, 255, 0.15) !important;
-        border-radius: 12px;
-        border: 1px solid rgba(16, 15, 15, 0.2);
-      
-        padding: 12px;
-    }
-
-    button:hover{
-    
-    background-color: #4f4e4e !important; 
-    transform: scale(1.02); 
-    transition: 0.3s;
-}
-    
-    a:hover {
-    text-decoration: underline !important; 
-}
-
-</style>
 
 <div class="container mt-5 mb-5">
     <div class="row justify-content-center">
